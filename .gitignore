@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Jupyter / Colab
+.ipynb_checkpoints/
+*.nbconvert.ipynb
+
+# Streamlit
+.streamlit/
+
+# Model artifacts (large/binary, regenerate from notebooks instead of diffing)
+*.pkl
+*.joblib
+!app/grainwise_model.pkl   # exception: the one model file the UI actually needs to run
+
+# Secrets / credentials — never commit these
+.env
+*.env
+credentials.json
+client_secret*.json
+*.pem
+*.key
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs and local scratch
+*.log
+.tmp/
+scratch/
+
+# Google Drive / Colab local mount artifacts, if anyone ever runs locally
+drive/
