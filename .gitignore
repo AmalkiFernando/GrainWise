@@ -21,7 +21,7 @@ ENV/
 .streamlit/
 
 # Model artifacts (large/binary, regenerate from notebooks instead of diffing)
-*.pkl
+
 *.joblib
 !app/grainwise_model.pkl   # exception: the one model file the UI actually needs to run
 
