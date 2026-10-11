@@ -1,0 +1,187 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Design tokens for the "Organic Bento" theme, shared with the AgriLink Sri Lanka frontend.
+ *
+ * Every color in the app resolves through one of these tokens — no component
+ * hardcodes a palette class — so the two blocks below are the whole theme.
+ * Adding a color here means adding it to BOTH blocks.
+ *
+ * Dark mode is class-based (`.dark` on <html>) rather than a bare
+ * prefers-color-scheme media query, because the preference is three-valued:
+ * light, dark, or system. src/lib/themeStorage.ts resolves that to a class,
+ * and a pre-paint script in index.html applies it before first paint.
+ */
+@theme {
+  --color-brand-forest: #1f4d36;
+  --color-brand-forest-light: #4a7c59;
+  --color-brand-harvest: #d9a441;
+  --color-brand-terracotta: #c4623b;
+  /* Ink for text sitting on a *bright* accent fill (the gold secondary
+     button). Can't be brand-forest: that flips light in dark mode, which
+     would put light green on light gold. */
+  --color-brand-ink: #1f4d36;
+  --color-bg-canvas: #faf7f0;
+  --color-bg-surface: #fffdf9;
+  /* Modal scrim. Carries its own alpha so it can go from a forest tint in
+     light mode to near-black in dark, where a green wash would wash out
+     rather than recede. */
+  --color-bg-overlay: rgb(31 77 54 / 0.3);
+  --color-text-primary: #26201a;
+  --color-text-secondary: #6b6259;
+  --color-state-success: #3e7a4f;
+  --color-state-danger: #b84c3c;
+  --color-state-info: #3e7a82;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Stated rather than left to the UA default, so native controls are right even
+   with JS disabled. `.dark` below overrides it (same specificity, later rule),
+   and applyTheme()'s inline style overrides both. */
+:root {
+  color-scheme: light;
+}
+
+/*
+ * Dark palette — "night harvest": a moonlit estate rather than a generic
+ * dark UI. Surfaces are green-tinted charcoal (warm-leaning, never blue),
+ * text is warm parchment so it stays in the same family as the light
+ * theme's #26201a, and the accents brighten to stay legible on them.
+ *
+ * brand-forest deliberately *inverts* from a deep to a luminous green. That
+ * is what keeps the `bg-brand-forest` + `text-bg-surface` pairing readable in
+ * both modes: both sides of the pair flip together, so filled buttons and the
+ * active nav item go from dark-on-light to light-on-dark without any
+ * component needing a `dark:` override.
+ *
+ * Contrast on the dark canvas (#0f1512), WCAG 2.1 ratios:
+ *   text-primary 14.8:1 · text-secondary 7.0:1 · brand-forest 8.6:1
+ *   brand-harvest 10.5:1 · state-danger 6.9:1 · state-info 7.7:1
+ *   brand-terracotta 6.4:1
+ * Filled pairs: forest/surface 7.4:1 · harvest/ink 10.2:1 · danger/surface 6.2:1
+ */
+.dark {
+  --color-brand-forest: #7cbe8c;
+  --color-brand-forest-light: #9ed4aa;
+  --color-brand-harvest: #e8bd60;
+  --color-brand-terracotta: #dd7d55;
+  --color-brand-ink: #10170f;
+  --color-bg-canvas: #0f1512;
+  --color-bg-surface: #17201a;
+  --color-bg-overlay: rgb(6 10 8 / 0.66);
+  --color-text-primary: #e9e4d9;
+  --color-text-secondary: #a49c8e;
+  --color-state-success: #74c489;
+  --color-state-danger: #e8806c;
+  --color-state-info: #66b3bb;
+
+  /* Native UI — scrollbars, date pickers, autofill, select popups. Also set
+     inline by applyTheme() so it takes effect before this sheet loads. */
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-bg-canvas);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+}
+
+/*
+ * Cross-fade every color when the theme changes.
+ *
+ * Scoped to `.theme-transition`, which applyTheme() adds for the duration of
+ * the swap and then removes. A permanent page-wide transition would override
+ * each component's own `transition-colors` timing and make every hover feel
+ * sluggish; this way the page-wide fade costs nothing during normal use.
+ *
+ * Unlayered, so it outranks the utilities in @layer utilities. Only color
+ * properties are listed — `transform` and `opacity` are left alone so the
+ * motion/react animations already running on route changes are untouched.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-transition,
+  html.theme-transition *,
+  html.theme-transition *::before,
+  html.theme-transition *::after {
+    transition-property:
+      background-color, border-color, color, fill, stroke, box-shadow, text-decoration-color,
+      outline-color;
+    transition-duration: 320ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/*
+ * Tailwind bakes a fixed black alpha into the shadow utilities and registers
+ * --tw-shadow-color as `inherits: false`, so it can't be re-pointed from
+ * `.dark`. These two utilities are the only ones the app uses; on a dark
+ * canvas the stock values are invisible, so deepen them and add a faint top
+ * highlight to keep cards reading as raised.
+ */
+.dark .shadow-sm {
+  box-shadow:
+    0 1px 2px 0 rgb(0 0 0 / 0.4),
+    0 1px 3px 0 rgb(0 0 0 / 0.28),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.03);
+}
+
+.dark .shadow-lg {
+  box-shadow:
+    0 12px 32px -8px rgb(0 0 0 / 0.7),
+    0 4px 12px -4px rgb(0 0 0 / 0.5),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.04);
+}
+
+/*
+ * Liquid glass: the highlight behind the current navigation tab. A bright top edge and a
+ * brighter-at-the-top gradient read as a curved pane catching the light, a faint forest tint ties
+ * it to the brand, and the blur frosts whatever scrolls beneath the sticky header.
+ */
+/* .glass-hover takes the same glass on hover or keyboard focus (the header's language and
+   theme buttons). */
+.glass-pill,
+.glass-hover:is(:hover, :focus-visible) {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.85), rgb(255 255 255 / 0.4)),
+    color-mix(in srgb, var(--color-brand-forest) 12%, transparent);
+  border: 1px solid rgb(255 255 255 / 0.8);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.95),
+    inset 0 -1px 1px rgb(31 77 54 / 0.08),
+    0 4px 14px -4px rgb(31 77 54 / 0.3),
+    0 1px 3px rgb(31 77 54 / 0.12);
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+}
+
+.dark .glass-pill,
+.dark .glass-hover:is(:hover, :focus-visible) {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.16), rgb(255 255 255 / 0.04)),
+    color-mix(in srgb, var(--color-brand-forest) 16%, transparent);
+  border-color: rgb(255 255 255 / 0.14);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -1px 1px rgb(0 0 0 / 0.3),
+    0 6px 18px -6px rgb(0 0 0 / 0.7),
+    0 0 0 1px rgb(124 190 140 / 0.1);
+}
+
+/* Text selection, in-theme in both modes. */
+::selection {
+  background-color: color-mix(in srgb, var(--color-brand-forest) 28%, transparent);
+  color: var(--color-text-primary);
+}
+
+/* Scrollbars. color-scheme already handles the platform default; this just
+   matches them to the canvas on engines that support the properties. */
+@supports (scrollbar-color: auto) {
+  html {
+    scrollbar-color: color-mix(in srgb, var(--color-text-secondary) 40%, transparent) transparent;
+  }
+}

@@ -1,0 +1,435 @@
+{
+  "modelInfo": {
+    "name": "Logistic Regression",
+    "estimator": "LogisticRegression",
+    "params": {
+      "C": 3.1622776601683795,
+      "max_iter": 5000,
+      "penalty": "l2",
+      "solver": "liblinear"
+    },
+    "scaled": true,
+    "features": [
+      "Area",
+      "Perimeter",
+      "Major_Axis_Length",
+      "Minor_Axis_Length",
+      "Eccentricity",
+      "Convex_Area",
+      "Extent",
+      "Aspect_Ratio",
+      "Roundness",
+      "Solidity"
+    ],
+    "inputs": [
+      "Area",
+      "Perimeter",
+      "Major_Axis_Length",
+      "Minor_Axis_Length",
+      "Eccentricity",
+      "Convex_Area",
+      "Extent"
+    ],
+    "derived": ["Aspect_Ratio", "Roundness", "Solidity"],
+    "classes": {
+      "positive": "Cammeo",
+      "negative": "Osmancik"
+    },
+    "default_threshold": 0.805,
+    "threshold_presets": [
+      {
+        "cost_ratio": 1,
+        "threshold": 0.485
+      },
+      {
+        "cost_ratio": 2,
+        "threshold": 0.615
+      },
+      {
+        "cost_ratio": 5,
+        "threshold": 0.805
+      },
+      {
+        "cost_ratio": 10,
+        "threshold": 0.9
+      },
+      {
+        "cost_ratio": 20,
+        "threshold": 0.935
+      }
+    ],
+    "feature_stats": {
+      "Area": {
+        "min": 7551.0,
+        "max": 18313.0,
+        "mean": 12673.86811023622,
+        "class_means": {
+          "Cammeo": 14170.433282208589,
+          "Osmancik": 11554.876720183487
+        }
+      },
+      "Perimeter": {
+        "min": 359.1000061035156,
+        "max": 548.4459838867188,
+        "mean": 454.3437772034973,
+        "class_means": {
+          "Cammeo": 487.48280748706657,
+          "Osmancik": 429.56551144101206
+        }
+      },
+      "Major_Axis_Length": {
+        "min": 145.26446533203125,
+        "max": 239.010498046875,
+        "mean": 188.81217140037558,
+        "class_means": {
+          "Cammeo": 205.47743867511397,
+          "Osmancik": 176.35144403440142
+        }
+      },
+      "Minor_Axis_Length": {
+        "min": 59.53240585327149,
+        "max": 107.54244995117188,
+        "mean": 86.34103571648986,
+        "class_means": {
+          "Cammeo": 88.81467203713633,
+          "Osmancik": 84.49148195380465
+        }
+      },
+      "Eccentricity": {
+        "min": 0.7772325873374939,
+        "max": 0.9480069279670716,
+        "mean": 0.8868457573096896,
+        "class_means": {
+          "Cammeo": 0.9009038133123901,
+          "Osmancik": 0.8763344585553768
+        }
+      },
+      "Convex_Area": {
+        "min": 7723.0,
+        "max": 18724.0,
+        "mean": 12958.785761154855,
+        "class_means": {
+          "Cammeo": 14501.36963190184,
+          "Osmancik": 11805.385894495414
+        }
+      },
+      "Extent": {
+        "min": 0.4974128603935241,
+        "max": 0.8610495328903198,
+        "mean": 0.662736752977365,
+        "class_means": {
+          "Cammeo": 0.6520434666904935,
+          "Osmancik": 0.6707321918065395
+        }
+      },
+      "Aspect_Ratio": {
+        "min": 1.589285944081953,
+        "max": 3.1421865198921015,
+        "mean": 2.1906193455744343,
+        "class_means": {
+          "Cammeo": 2.3195042740919734,
+          "Osmancik": 2.0942512568204936
+        }
+      },
+      "Roundness": {
+        "min": 0.6338804790273349,
+        "max": 0.9027042364445748,
+        "mean": 0.7698030946649529,
+        "class_means": {
+          "Cammeo": 0.7482632972918787,
+          "Osmancik": 0.7859085394897748
+        }
+      },
+      "Solidity": {
+        "min": 0.946392750916511,
+        "max": 0.9900239096380575,
+        "mean": 0.9780856457596625,
+        "class_means": {
+          "Cammeo": 0.977153168018516,
+          "Osmancik": 0.9787828653551068
+        }
+      }
+    },
+    "n_train": 3048,
+    "coefficients": [
+      {
+        "feature": "Eccentricity",
+        "coefficient": 1.6840108608568523
+      },
+      {
+        "feature": "Area",
+        "coefficient": 1.4056969677365219
+      },
+      {
+        "feature": "Convex_Area",
+        "coefficient": 1.3021734844972874
+      },
+      {
+        "feature": "Aspect_Ratio",
+        "coefficient": 0.9616850088549789
+      },
+      {
+        "feature": "Roundness",
+        "coefficient": 0.8507636138287115
+      },
+      {
+        "feature": "Major_Axis_Length",
+        "coefficient": 0.7875948421678518
+      },
+      {
+        "feature": "Solidity",
+        "coefficient": -0.678218465715552
+      },
+      {
+        "feature": "Minor_Axis_Length",
+        "coefficient": 0.20618019055569325
+      },
+      {
+        "feature": "Extent",
+        "coefficient": -0.07316404360050216
+      },
+      {
+        "feature": "Perimeter",
+        "coefficient": 0.05869276840406462
+      }
+    ],
+    "evaluation": {
+      "n_test": 762,
+      "roc_auc": 0.977964766139472,
+      "thresholds": {
+        "0.500": {
+          "accuracy": 0.926509186351706,
+          "precision": 0.9041916167664671,
+          "recall": 0.9263803680981595,
+          "tp": 302,
+          "tn": 404,
+          "fp": 32,
+          "fn": 24,
+          "threshold": 0.5,
+          "cost_5_to_1": 184
+        },
+        "0.805": {
+          "accuracy": 0.905511811023622,
+          "precision": 0.9601449275362319,
+          "recall": 0.8128834355828221,
+          "tp": 265,
+          "tn": 425,
+          "fp": 11,
+          "fn": 61,
+          "threshold": 0.805,
+          "cost_5_to_1": 116
+        }
+      },
+      "one_feature_baseline": {
+        "accuracy": 0.916010498687664,
+        "precision": 0.8945783132530121,
+        "recall": 0.911042944785276,
+        "tp": 297,
+        "tn": 401,
+        "fp": 35,
+        "fn": 29,
+        "feature": "Major_Axis_Length",
+        "cost_5_to_1": 204
+      }
+    },
+    "cv_comparison": [
+      {
+        "model": "Logistic Regression",
+        "member": "Kishakya",
+        "accuracy_mean": 0.9306571757262008,
+        "accuracy_std": 0.0117454583189863,
+        "precision_mean": 0.9245918994369888,
+        "recall_mean": 0.9130886670581324,
+        "f1_mean": 0.9185118872796292,
+        "roc_auc_mean": 0.9798651894448156,
+        "fit_time_s": 0.0168627341588338
+      },
+      {
+        "model": "Support Vector Machine",
+        "member": "Razni",
+        "accuracy_mean": 0.9281445930399768,
+        "accuracy_std": 0.0109595403147905,
+        "precision_mean": 0.922317164564394,
+        "recall_mean": 0.9092601291837932,
+        "f1_mean": 0.9154667040400496,
+        "roc_auc_mean": 0.9798501311154114,
+        "fit_time_s": 0.969825784365336
+      },
+      {
+        "model": "k-Nearest Neighbours",
+        "member": "Jinathi",
+        "accuracy_mean": 0.9280335058958872,
+        "accuracy_std": 0.0117161874817933,
+        "precision_mean": 0.9153624519114912,
+        "recall_mean": 0.9169152476022704,
+        "f1_mean": 0.9159123761305024,
+        "roc_auc_mean": 0.9758710586713746,
+        "fit_time_s": 0.0219842433929443
+      },
+      {
+        "model": "Random Forest",
+        "member": "Amalki",
+        "accuracy_mean": 0.9273799252228934,
+        "accuracy_std": 0.0112859091395802,
+        "precision_mean": 0.9190042405055844,
+        "recall_mean": 0.9110412996672538,
+        "f1_mean": 0.914752689454936,
+        "roc_auc_mean": 0.978225463998141,
+        "fit_time_s": 3.224888793627421
+      }
+    ],
+    "dataset_doi": "10.24432/C5MW4Z"
+  },
+  "samples": [
+    {
+      "id": 777,
+      "variety": "Cammeo",
+      "measurements": {
+        "Area": 15806.0,
+        "Perimeter": 513.844970703125,
+        "Major_Axis_Length": 221.1923828125,
+        "Minor_Axis_Length": 91.62950897216795,
+        "Eccentricity": 0.9101619720458984,
+        "Convex_Area": 16043.0,
+        "Extent": 0.5748681426048279
+      }
+    },
+    {
+      "id": 94,
+      "variety": "Cammeo",
+      "measurements": {
+        "Area": 14064.0,
+        "Perimeter": 486.8900146484375,
+        "Major_Axis_Length": 204.1630706787109,
+        "Minor_Axis_Length": 88.52142333984375,
+        "Eccentricity": 0.9011141061782836,
+        "Convex_Area": 14388.0,
+        "Extent": 0.6483795046806335
+      }
+    },
+    {
+      "id": 2467,
+      "variety": "Osmancik",
+      "measurements": {
+        "Area": 12326.0,
+        "Perimeter": 444.0669860839844,
+        "Major_Axis_Length": 181.0114288330078,
+        "Minor_Axis_Length": 87.66716766357422,
+        "Eccentricity": 0.8748918175697327,
+        "Convex_Area": 12597.0,
+        "Extent": 0.6708027124404907
+      }
+    },
+    {
+      "id": 1634,
+      "variety": "Osmancik",
+      "measurements": {
+        "Area": 11750.0,
+        "Perimeter": 428.375,
+        "Major_Axis_Length": 178.55361938476562,
+        "Minor_Axis_Length": 84.70418548583984,
+        "Eccentricity": 0.8803143501281738,
+        "Convex_Area": 11869.0,
+        "Extent": 0.6086821556091309
+      }
+    }
+  ],
+  "prediction": {
+    "variety": "Cammeo",
+    "probability": {
+      "Cammeo": 0.999933497690351,
+      "Osmancik": 6.650230964899695e-5
+    },
+    "threshold": 0.805,
+    "margin": 0.19493349769035095,
+    "measurements": {
+      "Area": 15231.0,
+      "Perimeter": 525.579,
+      "Major_Axis_Length": 229.7499,
+      "Minor_Axis_Length": 85.0932,
+      "Eccentricity": 0.928883044833442,
+      "Convex_Area": 15617.0,
+      "Extent": 0.5729
+    },
+    "derived": {
+      "Aspect_Ratio": 2.699979551832579,
+      "Roundness": 0.6928867774219131,
+      "Solidity": 0.9752833450726772
+    },
+    "explanation": {
+      "intercept": -0.7511574781234145,
+      "log_odds": 9.618207374822283,
+      "terms": [
+        {
+          "feature": "Eccentricity",
+          "value": 0.928883044833442,
+          "z": 2.0193651853727097,
+          "contribution": 3.400632904203854
+        },
+        {
+          "feature": "Aspect_Ratio",
+          "value": 2.699979551832579,
+          "z": 2.686979200830405,
+          "contribution": 2.5840276165437324
+        },
+        {
+          "feature": "Area",
+          "value": 15231.0,
+          "z": 1.4836612728760301,
+          "contribution": 2.0855781524299437
+        },
+        {
+          "feature": "Roundness",
+          "value": 0.6928867774219131,
+          "z": -2.3352405305775235,
+          "contribution": -1.9867376729534114
+        },
+        {
+          "feature": "Convex_Area",
+          "value": 15617.0,
+          "z": 1.5041737948683394,
+          "contribution": 1.9586952317532136
+        },
+        {
+          "feature": "Major_Axis_Length",
+          "value": 229.7499,
+          "z": 2.3552613363873163,
+          "contribution": 1.854991680496012
+        },
+        {
+          "feature": "Solidity",
+          "value": 0.9752833450726772,
+          "z": -0.46341804062879377,
+          "contribution": 0.31429867250016785
+        },
+        {
+          "feature": "Perimeter",
+          "value": 525.579,
+          "z": 2.012364111748364,
+          "contribution": 0.11811122075549796
+        },
+        {
+          "feature": "Extent",
+          "value": 0.5729,
+          "z": -1.1591702596035758,
+          "contribution": 0.08480958341404142
+        },
+        {
+          "feature": "Minor_Axis_Length",
+          "value": 85.0932,
+          "z": -0.21846199712958328,
+          "contribution": -0.04504253619735479
+        }
+      ]
+    },
+    "warnings": []
+  },
+  "grain": {
+    "Area": 15231,
+    "Perimeter": 525.579,
+    "Major_Axis_Length": 229.7499,
+    "Minor_Axis_Length": 85.0932,
+    "Convex_Area": 15617,
+    "Extent": 0.5729
+  }
+}
